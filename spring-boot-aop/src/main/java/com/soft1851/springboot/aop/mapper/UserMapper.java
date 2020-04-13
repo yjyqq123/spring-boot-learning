@@ -13,11 +13,11 @@ public interface UserMapper {
      * 查询所有
      * @return List</Map>
      */
-    @Select("SELECT * FROM t_role")
+    @Select("SELECT * FROM t_student")
     @Results({
             @Result(id=true,property="id",column="id",javaType = Integer.class),
-            @Result(property="username",column="username",javaType = String.class),
-            @Result(property = "isAdmin",column="is_admin",javaType=Boolean.class)
+            @Result(property="name",column="name",javaType = String.class),
+            @Result(property = "role",column="role",javaType=Boolean.class)
     })
     List<Student> selectAll();
 
