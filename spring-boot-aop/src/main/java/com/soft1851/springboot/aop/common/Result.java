@@ -1,23 +1,58 @@
 package com.soft1851.springboot.aop.common;
 
+import com.soft1851.springboot.aop.common.ResultCode;
 import lombok.Data;
+
+import java.io.Serializable;
 
 
 @Data
-public class Result<T> {
-    /**
-     *  success 是否成功返回结果 成功true 失败false
-     */
-    private boolean success;
-    /**
-     *  data 返回的结果数据
-     */
-    private T data;
+public class Result implements Serializable {
 
-    public static <T> Result<T> set(boolean success,T data){
-        Result<T> result=new Result<>();
-        result.setSuccess(success);
+    private static final long serialVersionUID = -3948389268046368059L;
+
+    private Integer code;
+
+    private String msg;
+
+    private Object data;
+
+    private Result() {
+    }
+
+    public Result(Integer code, String msg) {
+        this.code = code;
+        this.msg = msg;
+    }
+
+    public static Result success() {
+        Result result = new Result();
+        result.setResultCode(ResultCode.SUCCESS);
+        return result;
+    }
+
+    public static Result success(Object data) {
+        Result result = new Result();
+        result.setResultCode(ResultCode.SUCCESS);
         result.setData(data);
-        return  result;
+        return result;
+    }
+
+    public static Result failure(ResultCode resultCode) {
+        Result result = new Result();
+        result.setResultCode(resultCode);
+        return result;
+    }
+
+    public static Result failure(ResultCode resultCode, Object data) {
+        Result result = new Result();
+        result.setResultCode(resultCode);
+        result.setData(data);
+        return result;
+    }
+
+    public void setResultCode(ResultCode code) {
+        this.code = code.code();
+        this.msg = code.message();
     }
 }
